@@ -1,10 +1,150 @@
+:root {
+    --color-font: black;
+
+    --color-page-bg: rgb(233, 240, 244);
+    --color-list-bg: white;
+
+    --color-primary: rgb(46, 54, 64);
+    --color-primary-light: rgb(227, 235, 239);
+
+    --color-secondary: rgb(225, 172, 98);
+
+    --pad-card: 0 2rem;
+}
+
+@mixin flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+//  _
+// | |__   __ _ ___  ___
+// | '_ \ / _` / __|/ _ \
+// | |_) | (_| \__ |  __/
+// |_.__/ \__,_|___/\___|
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    font-family: 'Lato', sans-serif;
+    font-size: 62.5%; // 1rem = 10px
+}
+
 body {
+    font-size: 1.6rem; // default 16px but responsive
     // temp
-    background-color: rgb(31, 29, 38);
+    background-color: var(--color-page-bg);
+    color: var(--color-font);
+
+    display: flex;
+    justify-content: center;
+}
+
+//                                   _ _
+// _ __   ___  _ __ _ __ ___   __ _ | (_)_______
+// | '_ \ / _ \| '__| '_ ` _ \ / _` | | |_  / _ \
+// | | | | (_) | |  | | | | | | (_| | | |/ |  __/
+// |_| |_|\___/|_|  |_| |_| |_|\__,_|_|_/___\___|
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+}
+
+input {
+    border: none;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+//  _            _
+// | |_ ___   __| | ___
+// | __/ _ \ / _` |/ _ \
+// | || (_) | (_| | (_) |
+//  \__\___/ \__,_|\___/
+
+.todo {
+    width: 40rem;
+    background-color: aqua;
+
+    &__header {
+        color: var(--color-primary-light);
+        background-color: var(--color-primary);
+    }
+
+    &__list {
+        &-item {
+            background-color: var(--color-list-bg);
+
+            display: flex;
+
+            &:not(:last-of-type) {
+                border-bottom: 1px solid gray;
+            }
+
+            &-content {
+                // background-color: darkviolet;
+                position: relative;
+                flex: 1;
+
+                display: flex;
+                align-items: center;
+
+                padding: var(--pad-card);
+                overflow: hidden;
+
+                // two strips
+                &::before {
+                    content: '';
+                    position: absolute;
+                    border: 1px solid var(--color-secondary);
+                    width: .6rem;
+                    height: 4rem;
+
+                    left: 0rem;
+                }
+            }
+
+            &-btn {
+                // background-color: fuchsia;
+                @include flex-center();
+                border: none;
+                width: 4rem;
+                height: 4rem;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                &-check {}
+
+                &-del {}
+
+                &-add {}
+            }
+
+            &-input {
+                // background-color: aquamarine;
+                flex: 1;
+                padding: var(--pad-card);
+            }
+        }
+
+        &-input {
+            background-color: aqua;
+            width: 100%;
+        }
+    }
 }
