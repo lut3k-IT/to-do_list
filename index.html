@@ -13,11 +13,29 @@
     <script defer src="script.js"></script>
 
     <!-- fonts -->
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 </body>
+<div class="todo">
+    <div class="todo__header">
+        <h1>ToDo List</h1>
+    </div>
+    <div class="todo__list">
+        <div class="todo__list-item">
+            <button class="todo__list-item-btn-check  btn-unchecked"></button>
+            <div class="todo__list-item-content"></div>
+            <button class="todo__list-item-btn-del"></button>
+        </div>
+        <div class="todo__list-item  todo__list-type">
+            <button class="todo__list-item-btn-add"></button>
+            <input type="text" class="todo__list-item-type">
+        </div>
+    </div>
+</div>
 
 </html>
