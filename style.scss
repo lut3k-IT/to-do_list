@@ -1,15 +1,23 @@
 :root {
+    // colors
     --color-font: black;
 
     --color-page-bg: rgb(233, 240, 244);
     --color-list-bg: white;
 
-    --color-primary: rgb(46, 54, 64);
-    --color-primary-light: rgb(227, 235, 239);
+    --color-primary: #2e3641;
+    --color-primary-light: rgb(87, 97, 112);
+    --color-primary-bright: rgb(227, 235, 239);
 
     --color-secondary: rgb(225, 172, 98);
 
+    --color-tertiary: #9eb2c0;
+    --color-tertiary-filter: invert(73%) sepia(8%) saturate(607%) hue-rotate(162deg) brightness(95%) contrast(90%);
+
+    // sizes
     --pad-card: 0 2rem;
+    --height-todo: 4rem;
+    --height-header: 5.5rem;
 }
 
 @mixin flex-center {
@@ -18,10 +26,17 @@
     align-items: center;
 }
 
-//  _
-// | |__   __ _ ___  ___
-// | '_ \ / _` / __|/ _ \
-// | |_) | (_| \__ |  __/
+@mixin strips {
+    content: '';
+    position: absolute;
+    width: .6rem;
+    left: 4rem;
+}
+
+//     _
+//    | |__   __ _ ___  ___
+//   | '_ \ / _` / __|/ _ \
+//  | |_) | (_| \__ |  __/
 // |_.__/ \__,_|___/\___|
 
 * {
@@ -45,10 +60,10 @@ body {
     justify-content: center;
 }
 
-//                                   _ _
-// _ __   ___  _ __ _ __ ___   __ _ | (_)_______
-// | '_ \ / _ \| '__| '_ ` _ \ / _` | | |_  / _ \
-// | | | | (_) | |  | | | | | | (_| | | |/ |  __/
+//                                      _ _
+//    _ __   ___  _ __ _ __ ___   __ _ | (_)_______
+//   | '_ \ / _ \| '__| '_ ` _ \ / _` | | |_  / _ \
+//  | | | | (_) | |  | | | | | | (_| | | |/ |  __/
 // |_| |_|\___/|_|  |_| |_| |_|\__,_|_|_/___\___|
 
 button,
@@ -59,6 +74,7 @@ textarea {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
+    background-color: unset;
 }
 
 input {
@@ -69,74 +85,118 @@ input {
     }
 }
 
-//  _            _
-// | |_ ___   __| | ___
-// | __/ _ \ / _` |/ _ \
-// | || (_) | (_| | (_) |
+//     _            _
+//    | |_ ___   __| | ___
+//   | __/ _ \ / _` |/ _ \
+//  | || (_) | (_| | (_) |
 //  \__\___/ \__,_|\___/
 
 .todo {
     width: 40rem;
-    background-color: aqua;
+    margin-top: 2rem;
 
     &__header {
-        color: var(--color-primary-light);
+        color: var(--color-primary-bright);
         background-color: var(--color-primary);
+        height: var(--height-header);
+
+        display: flex;
+        align-items: center;
+
+        position: relative;
+
+        // two strips
+        &::before {
+            @include strips();
+            border-left: 1px solid var(--color-primary-light);
+            border-right: 1px solid var(--color-primary-light);
+
+            height: var(--height-header);
+        }
+
+        & h1 {
+            font-size: 1.4em;
+            margin-left: 6rem;
+            // padding: 1rem 0;
+            // padding-left: 6rem;
+        }
     }
 
     &__list {
+        position: relative;
+
         &-item {
             background-color: var(--color-list-bg);
+            min-height: 4rem;
 
+            position: relative;
             display: flex;
 
             &:not(:last-of-type) {
-                border-bottom: 1px solid gray;
+                border-bottom: 1px solid rgb(210, 215, 219);
+            }
+
+            // two strips
+            &::before {
+                @include strips();
+                border-left: 1px solid var(--color-secondary);
+                border-right: 1px solid var(--color-secondary);
+
+                // height: var(--height-todo);
+                height: 100%;
             }
 
             &-content {
-                // background-color: darkviolet;
+                color: var(--color-primary);
+
                 position: relative;
                 flex: 1;
 
                 display: flex;
                 align-items: center;
 
-                padding: var(--pad-card);
+                // padding: var(--pad-card);
+                padding: 1rem 2rem;
                 overflow: hidden;
-
-                // two strips
-                &::before {
-                    content: '';
-                    position: absolute;
-                    border: 1px solid var(--color-secondary);
-                    width: .6rem;
-                    height: 4rem;
-
-                    left: 0rem;
-                }
             }
 
             &-btn {
-                // background-color: fuchsia;
                 @include flex-center();
-                border: none;
-                width: 4rem;
-                height: 4rem;
 
-                &:hover {
-                    cursor: pointer;
+                background-color: white;
+                border: none;
+                width: var(--height-todo);
+                // height: var(--height-todo);
+
+                // testing !!!!!!
+                // &:hover {
+                //     cursor: pointer;
+                // }
+
+                &-check {
+
+                    // testing !!!!!!!!!!!!!!!
+                    // height: 1.4rem;
+                    // width: 1.4rem;
+                    // margin: 1.3rem;
+
+                    &>input:hover {
+                        cursor: pointer;
+                    }
                 }
 
-                &-check {}
-
-                &-del {}
+                &-del {
+                    &:hover {
+                        background-color: rgba(255, 0, 0, 0.065);
+                        cursor: pointer;
+                    }
+                }
 
                 &-add {}
             }
 
             &-input {
-                // background-color: aquamarine;
+                background-color: white;
                 flex: 1;
                 padding: var(--pad-card);
             }
@@ -147,4 +207,20 @@ input {
             width: 100%;
         }
     }
+}
+
+//        _               _            _       _ _
+//    ___| |__   ___  ___| | _____  __| |     (_| |_ ___ _ __ ___  ___
+//  / __| '_ \ / _ \/ __| |/ / _ \/ _` |_____| | __/ _ | '_ ` _ \/ __|
+// | (__| | | |  __| (__|   |  __| (_| |_____| | ||  __| | | | | \__ \
+// \___|_| |_|\___|\___|_|\_\___|\__,_|     |_|\__\___|_| |_| |_|___/
+
+
+.item-checked>.todo__list-item-content {
+    color: var(--color-tertiary);
+    text-decoration: line-through;
+}
+
+.item-checked img {
+    filter: var(--color-tertiary-filter);
 }
