@@ -8,8 +8,7 @@
   --color-secondary: rgb(225, 172, 98);
   --color-tertiary: #9eb2c0;
   --color-tertiary-filter: invert(73%) sepia(8%) saturate(607%) hue-rotate(162deg) brightness(95%) contrast(90%);
-  --pad-card: 0 2rem;
-  --height-todo: 4rem;
+  --width-todo-btn: 4rem;
   --height-header: 5.5rem;
 }
 
@@ -33,10 +32,7 @@ body {
 }
 
 button,
-input,
-optgroup,
-select,
-textarea {
+input {
   font-family: inherit;
   font-size: 100%;
   line-height: 1.15;
@@ -69,7 +65,7 @@ input:focus {
   left: 4rem;
   border-left: 1px solid var(--color-primary-light);
   border-right: 1px solid var(--color-primary-light);
-  height: var(--height-header);
+  height: 100%;
 }
 .todo__header h1 {
   font-size: 1.4em;
@@ -78,16 +74,8 @@ input:focus {
 .todo__list {
   position: relative;
 }
-.todo__list-item {
-  background-color: var(--color-list-bg);
-  min-height: 4rem;
-  position: relative;
-  display: flex;
-}
-.todo__list-item:not(:last-of-type) {
-  border-bottom: 1px solid rgb(210, 215, 219);
-}
-.todo__list-item::before {
+.todo__list::before {
+  z-index: 10;
   content: "";
   position: absolute;
   width: 0.6rem;
@@ -96,22 +84,29 @@ input:focus {
   border-right: 1px solid var(--color-secondary);
   height: 100%;
 }
+.todo__list-item {
+  background-color: var(--color-list-bg);
+  min-height: 4rem;
+  display: flex;
+}
+.todo__list-item:not(:last-of-type) {
+  border-bottom: 1px solid rgb(210, 215, 219);
+}
 .todo__list-item-content {
   color: var(--color-primary);
   position: relative;
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem 1rem 2rem;
   overflow: hidden;
 }
 .todo__list-item-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
   border: none;
-  width: var(--height-todo);
+  width: var(--width-todo-btn);
 }
 .todo__list-item-btn-check > input:hover {
   cursor: pointer;
@@ -120,14 +115,18 @@ input:focus {
   background-color: rgba(255, 0, 0, 0.065);
   cursor: pointer;
 }
+.todo__list-item-btn-add > img {
+  filter: var(--color-tertiary-filter);
+  width: 1.2rem;
+}
+.todo__list-item-btn-add:hover {
+  background-color: rgb(211, 240, 211);
+  cursor: pointer;
+}
 .todo__list-item-input {
   background-color: white;
   flex: 1;
-  padding: var(--pad-card);
-}
-.todo__list-input {
-  background-color: aqua;
-  width: 100%;
+  padding: 1rem 2rem;
 }
 
 .item-checked > .todo__list-item-content {

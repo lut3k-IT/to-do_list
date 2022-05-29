@@ -15,8 +15,7 @@
     --color-tertiary-filter: invert(73%) sepia(8%) saturate(607%) hue-rotate(162deg) brightness(95%) contrast(90%);
 
     // sizes
-    --pad-card: 0 2rem;
-    --height-todo: 4rem;
+    --width-todo-btn: 4rem;
     --height-header: 5.5rem;
 }
 
@@ -26,7 +25,7 @@
     align-items: center;
 }
 
-@mixin strips {
+@mixin stripes {
     content: '';
     position: absolute;
     width: .6rem;
@@ -67,10 +66,7 @@ body {
 // |_| |_|\___/|_|  |_| |_| |_|\__,_|_|_/___\___|
 
 button,
-input,
-optgroup,
-select,
-textarea {
+input {
     font-family: inherit;
     font-size: 100%;
     line-height: 1.15;
@@ -105,45 +101,42 @@ input {
 
         position: relative;
 
-        // two strips
+        // two stripes
         &::before {
-            @include strips();
+            @include stripes();
             border-left: 1px solid var(--color-primary-light);
             border-right: 1px solid var(--color-primary-light);
 
-            height: var(--height-header);
+            height: 100%;
         }
 
         & h1 {
             font-size: 1.4em;
             margin-left: 6rem;
-            // padding: 1rem 0;
-            // padding-left: 6rem;
         }
     }
 
     &__list {
         position: relative;
 
+        // two orangee stripes
+        &::before {
+            z-index: 10;
+            @include stripes();
+            border-left: 1px solid var(--color-secondary);
+            border-right: 1px solid var(--color-secondary);
+
+            height: 100%;
+        }
+
         &-item {
             background-color: var(--color-list-bg);
             min-height: 4rem;
 
-            position: relative;
             display: flex;
 
             &:not(:last-of-type) {
                 border-bottom: 1px solid rgb(210, 215, 219);
-            }
-
-            // two strips
-            &::before {
-                @include strips();
-                border-left: 1px solid var(--color-secondary);
-                border-right: 1px solid var(--color-secondary);
-
-                // height: var(--height-todo);
-                height: 100%;
             }
 
             &-content {
@@ -155,31 +148,17 @@ input {
                 display: flex;
                 align-items: center;
 
-                // padding: var(--pad-card);
-                padding: 1rem 2rem;
+                padding: 1rem 1rem 1rem 2rem;
                 overflow: hidden;
             }
 
             &-btn {
                 @include flex-center();
 
-                background-color: white;
                 border: none;
-                width: var(--height-todo);
-                // height: var(--height-todo);
-
-                // testing !!!!!!
-                // &:hover {
-                //     cursor: pointer;
-                // }
+                width: var(--width-todo-btn);
 
                 &-check {
-
-                    // testing !!!!!!!!!!!!!!!
-                    // height: 1.4rem;
-                    // width: 1.4rem;
-                    // margin: 1.3rem;
-
                     &>input:hover {
                         cursor: pointer;
                     }
@@ -192,20 +171,27 @@ input {
                     }
                 }
 
-                &-add {}
+                &-add {
+                    &>img {
+                        filter: var(--color-tertiary-filter);
+                        width: 1.2rem;
+                    }
+
+                    &:hover {
+                        background-color: rgb(211, 240, 211);
+                        cursor: pointer;
+                    }
+                }
             }
 
             &-input {
                 background-color: white;
                 flex: 1;
-                padding: var(--pad-card);
+                padding: 1rem 2rem;
             }
         }
 
-        &-input {
-            background-color: aqua;
-            width: 100%;
-        }
+        // &-input {}
     }
 }
 
