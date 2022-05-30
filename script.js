@@ -55,8 +55,8 @@ const addTodo = () => {
 
         const html = `
         <div id="todo-${$idNumber}" class="todo__list-item">
-            <div class="todo__list-item-btn  todo__list-item-btn-check">
-                <input type="checkbox">
+            <div class="todo__list-item-btn">
+                <input class="todo__list-item-btn-check" type="checkbox">
             </div>
             <div class="todo__list-item-content">${$todoInput.value}</div>
             <button class="todo__list-item-btn  todo__list-item-btn-del">
@@ -72,7 +72,7 @@ const addTodo = () => {
     }
 }
 
-const deleteTask = (e) => {
+const deleteTask = e => {
     const task = e.target.closest('.todo__list-item');
     task.remove();
 }
@@ -84,8 +84,11 @@ const isEnter = e => {
 }
 
 const checkClick = e => {
+    console.log(e.target.classList.contains('todo__list-item-btn-check'));
+
     // jeżeli jest to input:checkbox
     if (e.target.classList.contains('todo__list-item-btn-check')) {
+        console.log(e);
         e.target.closest('.todo__list-item').classList.toggle('item-checked');
     }
     else if (e.target.closest('.todo__list-item-btn-del')) {
