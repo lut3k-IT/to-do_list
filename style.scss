@@ -25,11 +25,24 @@
     align-items: center;
 }
 
+@mixin white-row {
+    background-color: var(--color-list-bg);
+    min-height: 4rem;
+    display: flex;
+}
+
 @mixin stripes {
     content: '';
     position: absolute;
     width: .6rem;
     left: 4rem;
+}
+
+@mixin stripes-orange {
+    @include stripes();
+    border-left: 1px solid var(--color-secondary);
+    border-right: 1px solid var(--color-secondary);
+    height: 100%;
 }
 
 //     _
@@ -119,25 +132,21 @@ input {
     &__list {
         position: relative;
 
-        // two orangee stripes
         &::before {
-            z-index: 10;
-            @include stripes();
-            border-left: 1px solid var(--color-secondary);
-            border-right: 1px solid var(--color-secondary);
-
-            height: 100%;
+            // z-index: 10;
+            @include stripes-orange();
         }
 
         &-item {
-            background-color: var(--color-list-bg);
-            min-height: 4rem;
+            // background-color: var(--color-list-bg);
+            // min-height: 4rem;
+            // display: flex;
+            @include white-row();
 
-            display: flex;
-
-            &:not(:last-of-type) {
-                border-bottom: 1px solid rgb(210, 215, 219);
-            }
+            border-bottom: 1px solid rgb(210, 215, 219);
+            // &:not(:last-of-type) {
+            //     border-bottom: 1px solid rgb(210, 215, 219);
+            // }
 
             &-content {
                 color: var(--color-primary);
@@ -159,7 +168,7 @@ input {
                 width: var(--width-todo-btn);
 
                 &-check {
-                    &>input:hover {
+                    &:hover {
                         cursor: pointer;
                     }
                 }
@@ -171,27 +180,62 @@ input {
                     }
                 }
 
-                &-add {
-                    &>img {
-                        filter: var(--color-tertiary-filter);
-                        width: 1.2rem;
-                    }
+                // &-add {
+                //     &>img {
+                //         filter: var(--color-tertiary-filter);
+                //         width: 1.2rem;
+                //     }
 
-                    &:hover {
-                        background-color: rgb(211, 240, 211);
-                        cursor: pointer;
-                    }
-                }
+                //     &:hover {
+                //         background-color: rgb(211, 240, 211);
+                //         cursor: pointer;
+                //     }
+                // }
             }
 
-            &-input {
-                background-color: white;
-                flex: 1;
-                padding: 1rem 2rem;
-            }
+            // &-input {
+            //     background-color: white;
+            //     flex: 1;
+            //     padding: 1rem 2rem;
+            // }
         }
 
         // &-input {}
+    }
+
+    &__insert {
+        // background-color: var(--color-list-bg);
+        // min-height: 4rem;
+        // display: flex;
+        @include white-row();
+
+        position: relative;
+
+        &::before {
+            @include stripes-orange();
+        }
+
+        &-btn {
+            width: 4rem;
+
+            @include flex-center();
+
+            &>img {
+                filter: var(--color-tertiary-filter);
+                width: 1.2rem;
+            }
+
+            &:hover {
+                background-color: rgb(211, 240, 211);
+                cursor: pointer;
+            }
+        }
+
+        &-input {
+            background-color: white;
+            flex: 1;
+            padding: 1rem 2rem;
+        }
     }
 }
 

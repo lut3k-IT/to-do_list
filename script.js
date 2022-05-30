@@ -7,7 +7,111 @@
 //   - Pod listą zadań zawsze wyświetla się pole z możliwością dodania nowego zadania. Nowe zadanie jest zawsze *do zrobienia*
 //   - Po dodaniu nowego zadania, dodawane jest ono nad polem dodawana nowego zadania. Pole z możliwością dodania nowego zadania jest zawsze na samym dole listy.
 //   - Nie można dodać zadania bez wpisania tytułu (trzeba dodać wizualną walidację).
+
 //   - Każde zadanie można usunąć poprzez kliknięcie w ikonę kosza.
 //   - W prawym górnym rogu dodajmy przycisk, który pozwola usunąć wszystkie taski.
-//   - **Uwaga!** Aktualny stan listy zapisany jest w <u>LocalStorage</u>.
+//   - **Uwaga!** Aktualny stan listy zapisany jest w LocalStorage.
 //   - Jeśli mamy zapisaną w LocalStorage liste, powinna się ona pojawić od razu po załadowaniu skryptu
+
+//              _           _
+//    ___  ___| | ___  ___| |_ ___  _ __ ___
+//   / __|/ _ | |/ _ \/ __| __/ _ \| '__/ __|
+//  \__ |  __| |  __| (__| || (_) | |  \__ \
+// |___/\___|_|\___|\___|\__\___/|_|  |___/
+
+// const checkbox = document.querySelector('input[type=checkbox]');
+// console.log(checkbox);
+// console.log(checkbox.checked);
+
+let $todoBtnAdd; // button dodawania taska
+let $todoInput; // znacznik <input> 
+let $todoList; // kontener na taski
+let $idNumber = 0; // id nowo dodanego taska
+let $newTask; // nowo dodany task
+let $todoCont; // kontener całej aplikacji
+
+const init = () => {
+    prepareDOMElements();
+    prepareDOMEvents();
+}
+
+const prepareDOMElements = () => {
+    $todoBtnAdd = document.querySelector('.todo__insert-btn');
+    $todoInput = document.querySelector('.todo__insert-input');
+    $todoList = document.querySelector('.todo__list');
+    $todoCont = document.querySelector('.todo');
+}
+
+const prepareDOMEvents = () => {
+    $todoBtnAdd.addEventListener('click', addTodo);
+    $todoInput.addEventListener('keyup', isEnter);
+    $todoCont.addEventListener('click', checkClick);
+}
+
+const addTodo = () => {
+    if ($todoInput.value !== '') {
+        $idNumber++;
+        $todoInput.placeholder = '';
+
+        const html = `
+        <div id="todo-${$idNumber}" class="todo__list-item">
+            <div class="todo__list-item-btn  todo__list-item-btn-check">
+                <input type="checkbox">
+            </div>
+            <div class="todo__list-item-content">${$todoInput.value}</div>
+            <button class="todo__list-item-btn  todo__list-item-btn-del">
+                <img src="img/trash.svg" alt="trash">
+            </button>
+        </div>
+        `;
+
+        $todoList.insertAdjacentHTML('beforeend', html);
+        $todoInput.value = '';
+    } else {
+        $todoInput.placeholder = 'Uzupełnij pole!';
+    }
+}
+
+const deleteTask = (e) => {
+    const task = e.target.closest('.todo__list-item');
+    task.remove();
+}
+
+const isEnter = e => {
+    if (e.keyCode === 13) {
+        addTodo();
+    }
+}
+
+const checkClick = e => {
+    // jeżeli jest to input:checkbox
+    if (e.target.classList.contains('todo__list-item-btn-check')) {
+        e.target.closest('.todo__list-item').classList.toggle('item-checked');
+    }
+    else if (e.target.closest('.todo__list-item-btn-del')) {
+        deleteTask(e);
+    }
+}
+
+
+
+// const todoList = document.querySelector('.todo__list');
+// const todoListItem = document.querySelectorAll('.todo__list-item');
+// const todoCheckBox = document.querySelectorAll('input[type=checkbox]')
+// const todoContent = document.querySelectorAll('.todo__list-item-content');
+// const todoDel = document.querySelectorAll('.todo__list-item-btn-del');
+
+//                         _        _ _     _
+//   _____   _____ _ __  | |_     | (_)___| |_ ___ _ __   ___ _ __ ___
+//  / _ \ \ / / _ | '_ \| _______| | / __| __/ _ | '_ \ / _ | '__/ __|
+// |  __/\ V |  __| | | | ||_____| | \__ | ||  __| | | |  __| |  \__ \
+// \___| \_/ \___|_| |_|\__|    |_|_|___/\__\___|_| |_|\___|_|  |___/
+
+
+//      __                  _   _
+//    / _|_   _ _ __   ___| |_(_) ___  _ __  ___
+//   | |_| | | | '_ \ / __| __| |/ _ \| '_ \/ __|
+//  |  _| |_| | | | | (__| |_| | (_) | | | \__ \
+// |_|  \__,_|_| |_|\___|\__|_|\___/|_| |_|___/
+
+document.addEventListener('DOMContentLoaded', init);

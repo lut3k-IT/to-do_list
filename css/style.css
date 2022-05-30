@@ -75,7 +75,6 @@ input:focus {
   position: relative;
 }
 .todo__list::before {
-  z-index: 10;
   content: "";
   position: absolute;
   width: 0.6rem;
@@ -88,8 +87,6 @@ input:focus {
   background-color: var(--color-list-bg);
   min-height: 4rem;
   display: flex;
-}
-.todo__list-item:not(:last-of-type) {
   border-bottom: 1px solid rgb(210, 215, 219);
 }
 .todo__list-item-content {
@@ -108,22 +105,43 @@ input:focus {
   border: none;
   width: var(--width-todo-btn);
 }
-.todo__list-item-btn-check > input:hover {
+.todo__list-item-btn-check:hover {
   cursor: pointer;
 }
 .todo__list-item-btn-del:hover {
   background-color: rgba(255, 0, 0, 0.065);
   cursor: pointer;
 }
-.todo__list-item-btn-add > img {
+.todo__insert {
+  background-color: var(--color-list-bg);
+  min-height: 4rem;
+  display: flex;
+  position: relative;
+}
+.todo__insert::before {
+  content: "";
+  position: absolute;
+  width: 0.6rem;
+  left: 4rem;
+  border-left: 1px solid var(--color-secondary);
+  border-right: 1px solid var(--color-secondary);
+  height: 100%;
+}
+.todo__insert-btn {
+  width: 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.todo__insert-btn > img {
   filter: var(--color-tertiary-filter);
   width: 1.2rem;
 }
-.todo__list-item-btn-add:hover {
+.todo__insert-btn:hover {
   background-color: rgb(211, 240, 211);
   cursor: pointer;
 }
-.todo__list-item-input {
+.todo__insert-input {
   background-color: white;
   flex: 1;
   padding: 1rem 2rem;
