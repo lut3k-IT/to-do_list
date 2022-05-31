@@ -7,9 +7,10 @@
 //   - Pod listą zadań zawsze wyświetla się pole z możliwością dodania nowego zadania. Nowe zadanie jest zawsze *do zrobienia*
 //   - Po dodaniu nowego zadania, dodawane jest ono nad polem dodawana nowego zadania. Pole z możliwością dodania nowego zadania jest zawsze na samym dole listy.
 //   - Nie można dodać zadania bez wpisania tytułu (trzeba dodać wizualną walidację).
-
 //   - Każde zadanie można usunąć poprzez kliknięcie w ikonę kosza.
+
 //   - W prawym górnym rogu dodajmy przycisk, który pozwola usunąć wszystkie taski.
+
 //   - **Uwaga!** Aktualny stan listy zapisany jest w LocalStorage.
 //   - Jeśli mamy zapisaną w LocalStorage liste, powinna się ona pojawić od razu po załadowaniu skryptu
 
@@ -26,13 +27,17 @@
 let $todoBtnAdd; // button dodawania taska
 let $todoInput; // znacznik <input> 
 let $todoList; // kontener na taski
-let $idNumber = 0; // id nowo dodanego taska
 let $newTask; // nowo dodany task
 let $todoCont; // kontener całej aplikacji
+
+let $idNumber = localStorage.getItem('$idNumber') ?? 0; // id ostatnio dodanego taska
+let $inputVal; // zawartość todo
+
 
 const init = () => {
     prepareDOMElements();
     prepareDOMEvents();
+    loadTasks();
 }
 
 const prepareDOMElements = () => {
@@ -48,9 +53,23 @@ const prepareDOMEvents = () => {
     $todoCont.addEventListener('click', checkClick);
 }
 
+const loadTasks = () => {
+    if ($idNumber > 0) {
+        for (let i = 0; i < $idNumber; i++) {
+            const html = localStorage.getItem(`todo-${i}`);
+
+            if (html !== null) {
+                $todoList.insertAdjacentHTML('beforeend', html);
+            }
+        }
+    }
+}
+
 const addTodo = () => {
     if ($todoInput.value !== '') {
-        $idNumber++;
+        $inputVal = $todoInput.value;
+        // localStorage.setItem(${})
+        $idNumber = localStorage.getItem('$idNumber') ?? 0;
         $todoInput.placeholder = '';
 
         const html = `
@@ -58,7 +77,7 @@ const addTodo = () => {
             <div class="todo__list-item-btn">
                 <input class="todo__list-item-btn-check" type="checkbox">
             </div>
-            <div class="todo__list-item-content">${$todoInput.value}</div>
+            <div class="todo__list-item-content">${$inputVal}</div>
             <button class="todo__list-item-btn  todo__list-item-btn-del">
                 <img src="img/trash.svg" alt="trash">
             </button>
@@ -67,14 +86,24 @@ const addTodo = () => {
 
         $todoList.insertAdjacentHTML('beforeend', html);
         $todoInput.value = '';
-    } else {
+
+        localStorage.setItem(`todo-${$idNumber}`, html);
+        $idNumber++;
+        localStorage.setItem('$idNumber', $idNumber);
+    }
+    else {
         $todoInput.placeholder = 'Uzupełnij pole!';
     }
 }
 
 const deleteTask = e => {
     const task = e.target.closest('.todo__list-item');
+    localStorage.removeItem(task.id);
     task.remove();
+}
+
+const deleteAllTasks = e => {
+    // here
 }
 
 const isEnter = e => {
@@ -84,25 +113,14 @@ const isEnter = e => {
 }
 
 const checkClick = e => {
-    console.log(e.target.classList.contains('todo__list-item-btn-check'));
-
     // jeżeli jest to input:checkbox
     if (e.target.classList.contains('todo__list-item-btn-check')) {
-        console.log(e);
         e.target.closest('.todo__list-item').classList.toggle('item-checked');
     }
     else if (e.target.closest('.todo__list-item-btn-del')) {
         deleteTask(e);
     }
 }
-
-
-
-// const todoList = document.querySelector('.todo__list');
-// const todoListItem = document.querySelectorAll('.todo__list-item');
-// const todoCheckBox = document.querySelectorAll('input[type=checkbox]')
-// const todoContent = document.querySelectorAll('.todo__list-item-content');
-// const todoDel = document.querySelectorAll('.todo__list-item-btn-del');
 
 //                         _        _ _     _
 //   _____   _____ _ __  | |_     | (_)___| |_ ___ _ __   ___ _ __ ___
