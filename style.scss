@@ -1,7 +1,5 @@
 :root {
     // colors
-    --color-font: black;
-
     --color-page-bg: rgb(233, 240, 244);
     --color-list-bg: white;
 
@@ -17,6 +15,9 @@
     // sizes
     --width-todo-btn: 4rem;
     --height-header: 5.5rem;
+
+    // time
+    --transition-dur: .3s;
 }
 
 @mixin flex-center {
@@ -64,9 +65,9 @@ html {
 
 body {
     font-size: 1.6rem; // default 16px but responsive
-    // temp
+
     background-color: var(--color-page-bg);
-    color: var(--color-font);
+    color: var(--color-primary);
 
     display: flex;
     justify-content: center;
@@ -111,6 +112,7 @@ input {
 
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
         position: relative;
 
@@ -127,38 +129,48 @@ input {
             font-size: 1.4em;
             margin-left: 6rem;
         }
+
+        &-btn-del {
+            @include flex-center();
+            height: 100%;
+            width: var(--width-todo-btn);
+            border: none;
+
+            filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(51deg) brightness(107%) contrast(101%);
+
+            transition-duration: var(--transition-dur);
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+        }
     }
 
     &__list {
         position: relative;
 
         &::before {
-            // z-index: 10;
             @include stripes-orange();
         }
 
         &-item {
-            // background-color: var(--color-list-bg);
-            // min-height: 4rem;
-            // display: flex;
             @include white-row();
 
             border-bottom: 1px solid rgb(210, 215, 219);
-            // &:not(:last-of-type) {
-            //     border-bottom: 1px solid rgb(210, 215, 219);
-            // }
 
             &-content {
                 color: var(--color-primary);
+                padding: 1rem 1rem 1rem 2rem;
+                overflow: hidden;
 
-                position: relative;
+                transition-duration: var(--transition-dur);
+
                 flex: 1;
+                position: relative;
 
                 display: flex;
                 align-items: center;
-
-                padding: 1rem 1rem 1rem 2rem;
-                overflow: hidden;
             }
 
             &-btn {
@@ -166,6 +178,8 @@ input {
 
                 border: none;
                 width: var(--width-todo-btn);
+
+                transition-duration: var(--transition-dur);
 
                 &-check {
                     &:hover {
@@ -175,40 +189,16 @@ input {
 
                 &-del {
                     &:hover {
-                        background-color: rgba(255, 0, 0, 0.065);
+                        background-color: rgba(255, 0, 0, 0.127);
                         cursor: pointer;
                     }
                 }
-
-                // &-add {
-                //     &>img {
-                //         filter: var(--color-tertiary-filter);
-                //         width: 1.2rem;
-                //     }
-
-                //     &:hover {
-                //         background-color: rgb(211, 240, 211);
-                //         cursor: pointer;
-                //     }
-                // }
             }
-
-            // &-input {
-            //     background-color: white;
-            //     flex: 1;
-            //     padding: 1rem 2rem;
-            // }
         }
-
-        // &-input {}
     }
 
     &__insert {
-        // background-color: var(--color-list-bg);
-        // min-height: 4rem;
-        // display: flex;
         @include white-row();
-
         position: relative;
 
         &::before {
@@ -217,6 +207,7 @@ input {
 
         &-btn {
             width: 4rem;
+            transition-duration: var(--transition-dur);
 
             @include flex-center();
 
